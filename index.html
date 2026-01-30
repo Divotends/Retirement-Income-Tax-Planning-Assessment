@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Peak Intake (Part A) — Retirement Income &amp; Tax Planning Assessment</title>
+  <style>
+    :root{--navy:#002b45;--bg:#f6f7f8;--card:#fff;--muted:#6b7280;--border:#d1d5db}
+    *{box-sizing:border-box}
+    body{font-family:Arial,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;margin:0;background:var(--bg);color:#111827}
+    .wrap{max-width:980px;margin:24px auto;padding:18px}
+    .card{background:var(--card);border:1px solid #e5e7eb;border-radius:12px;padding:18px}
+    h1{margin:0 0 6px;color:var(--navy);font-size:22px}
+    .sub{margin:0 0 14px;color:var(--muted);line-height:1.35}
+    .nav{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 16px}
+    .chip{border:1px solid var(--border);background:#fff;color:#111827;padding:8px 10px;border-radius:999px;cursor:pointer;font-size:13px}
+    .chip.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+    section{display:none;margin-top:12px}
+    section.active{display:block}
+    h2{margin:10px 0 6px;color:var(--navy);font-size:16px}
+    .hint{margin:0 0 10px;color:var(--muted);font-size:13px;line-height:1.35}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:760px){.grid{grid-template-columns:1fr}}
+    label{display:block;font-weight:700;font-size:13px;margin:10px 0 6px}
+    input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font-size:14px}
+    textarea{min-height:90px;resize:vertical}
+    .follow{display:none;margin-top:10px;padding:10px;border:1px dashed var(--border);border-radius:10px;background:#fafafa}
+    .follow.on{display:block}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+    button{background:var(--navy);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    button.secondary{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+    .ok{display:none;margin-top:12px;padding:10px 12px;border-radius:10px;border:1px solid #bbf7d0;background:#f0fdf4}
+    .small{font-size:12px;color:var(--muted);line-height:1.35}
+    .box{background:#fafafa;border:1px dashed var(--border);border-radius:10px;padding:10px;margin:10px 0}
+    .checkgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    @media (max-width:760px){.checkgrid{grid-template-columns:1fr}}
+    .chk{display:flex;align-items:flex-start;gap:8px;padding:8px;border:1px solid #eee;border-radius:10px;background:#fff}
+    .chk input{width:auto;margin-top:2px}
+    .micro{font-weight:400;color:var(--muted);font-size:12px;line-height:1.3}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Retirement Income &amp; Tax Planning Assessment</h1>
+      <p class="sub">
+        Part A (Intake). Simple, human questions. You don’t need perfect numbers—estimates are fine.
+        We’ll use this to build your 1-page assessment and a clear next-step plan.
+      </p>
+
+      <div class="nav" id="nav">
+        <button class="chip active" type="button" data-target="demo">Demographics</button>
+        <button class="chip" type="button" data-target="ret">Retirement</button>
+        <button class="chip" type="button" data-target="tax">Investments &amp; Taxes</button>
+        <button class="chip" type="button" data-target="obbba">OBBBA / 2026+</button>
+        <button class="chip" type="button" data-target="estate">Estate</button>
+        <button class="chip" type="button" data-target="notes">Advisor Notes</button>
+      </div>
+
+      <form id="f" novalidate>
+        <!-- DEMO -->
+        <section id="demo" class="active">
+          <h2>Demographics</h2>
+          <p class="hint">Who are we planning for, and who needs to be in the room. Basic info only.</p>
+          <div class="grid">
+            <div><label>Full Name</label><input name="name" autocomplete="name" /></div>
+            <div><label>Email</label><input name="email" type="email" autocomplete="email" /></div>
+            <div><label>Phone</label><input name="phone" type="tel" autocomplete="tel" placeholder="(###) ###-####" /></div>
+            <div><label>Age</label><input name="age" type="number" min="0" /></div>
+            <div><label>Planned retirement age</label><input name="retirementAge" type="number" min="0" /></div>
+            <div><label>Currently employed?</label>
+              <select name="employed"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select>
+            </div>
+            <div><label>Occupation / former occupation</label><input name="occupation" /></div>
+            <div><label>Marital status</label>
+              <select name="maritalStatus"><option value="">Select</option><option value="single">Single</option><option value="married">Married</option><option value="divorced">Divorced</option><option value="widowed">Widowed</option></select>
+            </div>
+          </div>
+          <label>Dependents / support obligations</label>
+          <input name="dependents" placeholder="e.g., 2 kids; aging parent" />
+          <div class="row"><button type="button" data-next="ret">Next</button></div>
+        </section>
+
+        <!-- RETIREMENT -->
+        <section id="ret">
+          <h2>Retirement &amp; Income</h2>
+          <p class="hint">Targets + biggest concern. We’ll keep this in your words.</p>
+          <div class="grid">
+            <div><label>Income goal (monthly)</label><input name="incomeGoal" placeholder="$10,000/mo" /></div>
+            <div><label>Social Security target age</label><input name="ssAge" type="number" min="0" placeholder="62–70" /></div>
+            <div><label>Pension expected?</label>
+              <select name="pension"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select>
+            </div>
+            <div><label>Retiring before 65?</label>
+              <select name="retireBefore65"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option></select>
+            </div>
+          </div>
+          <label>Primary concern (verbatim)</label>
+          <textarea name="biggestConcern" placeholder="What are you most worried about?"></textarea>
+
+          <h2 style="margin-top:16px;">How You Think About Retirement Income</h2>
+          <p class="hint">No scoring—just signal we can build around.</p>
+          <div class="grid">
+            <div>
+              <label>When markets decline, which best describes you?</label>
+              <select name="retireMarketReaction">
+                <option value="">Select</option>
+                <option value="stay">I stay the course</option>
+                <option value="uneasy">I get uncomfortable but usually don’t act</option>
+                <option value="react">I feel compelled to make changes</option>
+              </select>
+            </div>
+            <div>
+              <label>Which matters more to you in retirement?</label>
+              <select name="retirePriority">
+                <option value="">Select</option>
+                <option value="secure">Knowing my income is secure</option>
+                <option value="balance">A balance of both</option>
+                <option value="growth">Maximizing long-term growth</option>
+              </select>
+            </div>
+            <div>
+              <label>If income needs change, you prefer to:</label>
+              <select name="incomeChangePreference">
+                <option value="">Select</option>
+                <option value="spend">Adjust spending</option>
+                <option value="invest">Adjust investments</option>
+                <option value="both">Adjust both</option>
+              </select>
+            </div>
+            <div>
+              <label>Preferred style of income planning:</label>
+              <select name="incomeStyle">
+                <option value="">Select</option>
+                <option value="floor">Build a secure “income floor” first</option>
+                <option value="totalReturn">Total-return with guardrails</option>
+                <option value="unsure">Not sure yet</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="small"><strong>What happens next:</strong> after this intake, we’ll request the relevant documents, build your 1-page assessment, and then walk through clear options (no surprises).</div>
+          </div>
+
+          <div class="row"><button class="secondary" type="button" data-prev="demo">Back</button><button type="button" data-next="tax">Next</button></div>
+        </section>
+
+        <!-- TAX -->
+        <section id="tax">
+          <h2>Investments &amp; Taxes</h2>
+          <p class="hint">A quick inventory + the tax levers that usually matter first. Checking boxes is enough for now.</p>
+
+          <h2 style="margin-top:14px;">Major Accounts (Checklist)</h2>
+          <p class="hint">Select what you have. If you’re unsure, choose “Not sure” below and we’ll confirm with statements.</p>
+
+          <div class="checkgrid" style="margin-top:8px;">
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="401(k)/403(b)/457" /> <span><strong>401(k) / 403(b) / 457</strong><div class="micro">Employer retirement plan(s)</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Traditional IRA" /> <span><strong>Traditional IRA</strong><div class="micro">Pre-tax IRA</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Roth IRA" /> <span><strong>Roth IRA</strong><div class="micro">Tax-free qualified distributions</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Taxable/Brokerage" /> <span><strong>Taxable / Brokerage</strong><div class="micro">Non-retirement investments</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Cash/Bank" /> <span><strong>Cash / Bank</strong><div class="micro">Checking, savings, money market</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Annuity" /> <span><strong>Annuity</strong><div class="micro">Deferred, immediate, or MYGA</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="HSA" /> <span><strong>HSA</strong><div class="micro">Health Savings Account</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Pension" /> <span><strong>Pension</strong><div class="micro">Defined benefit income</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Business interest" /> <span><strong>Business interest</strong><div class="micro">Ownership / partnership / S-corp</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Real estate" /> <span><strong>Real estate</strong><div class="micro">Rental, land, second home</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Other" /> <span><strong>Other</strong><div class="micro">Anything not listed</div></span></label>
+            <label class="chk"><input type="checkbox" name="accountsChecklist" value="Not sure" /> <span><strong>Not sure</strong><div class="micro">We’ll confirm with statements</div></span></label>
+          </div>
+
+          <label style="margin-top:10px;">If helpful, add institutions / rough balances (optional)</label>
+          <textarea name="accountsDetails" placeholder="Fidelity 401(k) ~$900k; Schwab IRA ~$250k; Taxable ~$180k"></textarea>
+
+          <div class="grid">
+            <div>
+              <label>Roth conversions already?</label>
+              <select name="rothConv" id="rothConv"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select>
+              <div class="follow" id="f_roth">
+                <div class="small" style="margin-bottom:8px;"><strong>Why we ask:</strong> Roth conversions can reduce future taxes and RMD pressure, but timing matters (tax brackets, Medicare premiums, and cash flow).</div>
+                <label>Years / approx amounts</label><input name="rothYears" placeholder="2023 $40k" />
+                <label>Why (in your words)</label><input name="rothReason" placeholder="Bracket / RMDs / legacy / IRMAA" />
+              </div>
+            </div>
+
+            <div>
+              <label>Employer stock inside 401(k)? (NUA possible)</label>
+              <select name="employerStock401k" id="employerStock401k"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select>
+              <div class="follow" id="f_nua">
+                <div class="small" style="margin-bottom:8px;"><strong>Why we ask:</strong> employer stock can create special tax opportunities (and risks) depending on cost basis and how it’s distributed.</div>
+                <label>Approx value + cost basis (if known)</label><input name="nuaApprox" placeholder="$300k value, $80k basis" />
+              </div>
+            </div>
+          </div>
+
+          <h2 style="margin-top:16px;">Time Horizon (Simple)</h2>
+          <p class="hint">
+            This is just “when will you need this money?”—not an investing quiz.
+            It helps us decide what should be stable vs what can grow.
+          </p>
+
+          <div class="box small">
+            <strong>Quick script for new team members:</strong>
+            “We separate money into buckets by time. Money you might need soon should be steadier.
+            Money you won’t touch for 10+ years can usually handle more ups and downs.”
+          </div>
+
+          <div class="grid">
+            <div>
+              <label>Near-term money (next 0–3 years):</label>
+              <div class="small">Examples: emergency fund, major purchase, early retirement bridge, known expenses.</div>
+              <select name="paycheckMoney"><option value="">Select</option><option value="yes">Yes, I’ll need some soon</option><option value="some">Maybe / not sure</option><option value="no">No, not needed soon</option></select>
+            </div>
+            <div>
+              <label>Long-term money (10+ years):</label>
+              <div class="small">Examples: late retirement years, legacy, “leave it invested” money.</div>
+              <select name="futureMoney"><option value="">Select</option><option value="yes">Yes, long-term focus</option><option value="maybe">Some / mixed</option><option value="no">Not really</option></select>
+            </div>
+          </div>
+
+          <h2 style="margin-top:16px;">Risk Tolerance &amp; Behavior</h2>
+          <p class="hint">Behavioral check—how volatility feels in the real world.</p>
+          <div class="grid">
+            <div>
+              <label>If your portfolio dropped ~15% in a year, you would most likely:</label>
+              <select name="drawdownResponse">
+                <option value="">Select</option>
+                <option value="hold">Hold steady</option>
+                <option value="rebalance">Rebalance gradually</option>
+                <option value="reduce">Reduce risk exposure</option>
+              </select>
+            </div>
+            <div>
+              <label>Past experience with investing:</label>
+              <select name="investingExperience">
+                <option value="">Select</option>
+                <option value="limited">Limited experience</option>
+                <option value="moderate">Moderate experience</option>
+                <option value="extensive">Extensive experience</option>
+              </select>
+            </div>
+            <div>
+              <label>Long-term investing mindset:</label>
+              <select name="longTermView">
+                <option value="">Select</option>
+                <option value="decades">Comfortable staying invested long-term</option>
+                <option value="understand">I get it, but volatility still affects me</option>
+                <option value="safe">Prefer “safe” even if returns are lower</option>
+              </select>
+            </div>
+            <div>
+              <label>Primary investment priority:</label>
+              <select name="riskPriority">
+                <option value="">Select</option>
+                <option value="income">Stability / income first</option>
+                <option value="balance">Balance stability and growth</option>
+                <option value="growth">Maximize long-term growth</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row"><button class="secondary" type="button" data-prev="ret">Back</button><button type="button" data-next="obbba">Next</button></div>
+        </section>
+
+        <!-- OBBBA -->
+        <section id="obbba">
+          <h2>OBBBA / 2026+ (Key Planning Flags)</h2>
+          <p class="hint">
+            These are “watch items” that can change tax strategy. You don’t need to know the details—we’ll connect the dots.
+          </p>
+
+          <h2 style="margin-top:14px;">Key Features Checklist (Triage)</h2>
+          <div class="checkgrid" style="margin-top:8px;">
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Tax brackets/standard deduction changes (2026+)" /> <span><strong>Tax brackets / standard deduction changes</strong><div class="micro">Potential 2026+ bracket shifts</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Roth conversion timing considerations" /> <span><strong>Roth conversion timing</strong><div class="micro">Window planning, bracket mgmt</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Medicare premiums (IRMAA) sensitivity" /> <span><strong>Medicare premium sensitivity (IRMAA)</strong><div class="micro">MAGI spikes can raise premiums</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="ACA subsidy / MAGI management" /> <span><strong>ACA subsidy / MAGI management</strong><div class="micro">If retiring before Medicare</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Capital gains / tax-efficient liquidation plan" /> <span><strong>Capital gains &amp; liquidation plan</strong><div class="micro">Taxable account sequencing</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Charitable planning (QCD/DAF/bunching)" /> <span><strong>Charitable planning</strong><div class="micro">QCD/DAF/bunching strategies</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="RMD planning / distribution strategy" /> <span><strong>RMD &amp; distribution strategy</strong><div class="micro">Sequence and tax impact</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Estate exemption / legacy tax exposure" /> <span><strong>Estate exemption / legacy exposure</strong><div class="micro">High-level estate tax risk check</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="SALT / itemized deduction sensitivity" /> <span><strong>Itemized deduction sensitivity</strong><div class="micro">SALT and other deduction impacts</div></span></label>
+            <label class="chk"><input type="checkbox" name="obbbaFlags" value="Business owner planning (QBI/retirement plan design)" /> <span><strong>Business owner planning</strong><div class="micro">QBI / plan design / entity impacts</div></span></label>
+          </div>
+
+          <div class="grid" style="margin-top:12px;">
+            <div>
+              <label>ACA Marketplace coverage pre-Medicare?</label>
+              <select name="acaMarketplace" id="acaMarketplace"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select>
+              <div class="follow" id="f_aca">
+                <label>Income management notes (MAGI/subsidies)</label>
+                <textarea name="acaIncomeMgmt" placeholder="Any known income targets, subsidy concerns, or timing issues"></textarea>
+              </div>
+            </div>
+            <div>
+              <label>Charitable giving annually?</label>
+              <select name="charity" id="charity"><option value="">Select</option><option value="no">No</option><option value="yes">Yes</option></select>
+              <div class="follow" id="f_charity">
+                <label>Approx annual giving + method</label>
+                <input name="charityAnnual" placeholder="$5k (cash/DAF/QCD)" />
+              </div>
+            </div>
+          </div>
+
+          <label style="margin-top:10px;">Notes / concerns (optional)</label>
+          <textarea name="obbbaNotes" placeholder="Anything you’ve heard about upcoming tax changes that you’re worried about?"></textarea>
+
+          <div class="row"><button class="secondary" type="button" data-prev="tax">Back</button><button type="button" data-next="estate">Next</button></div>
+        </section>
+
+        <!-- ESTATE -->
+        <section id="estate">
+          <h2>Estate</h2>
+          <p class="hint">Checklist only. We’ll confirm details later with documents.</p>
+
+          <h2 style="margin-top:14px;">Documents Checklist</h2>
+          <div class="checkgrid" style="margin-top:8px;">
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Will" /> <span><strong>Will</strong><div class="micro">Last will and testament</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Revocable living trust" /> <span><strong>Revocable living trust</strong><div class="micro">Trust-based estate plan</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Durable financial power of attorney" /> <span><strong>Durable financial POA</strong><div class="micro">Who can act financially if incapacitated</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Medical power of attorney / healthcare proxy" /> <span><strong>Medical POA / Healthcare proxy</strong><div class="micro">Who can act medically</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Living will / directive to physicians" /> <span><strong>Living will / Directive</strong><div class="micro">End-of-life wishes</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="HIPAA authorization" /> <span><strong>HIPAA authorization</strong><div class="micro">Medical information access</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Guardianship nominations" /> <span><strong>Guardianship nominations</strong><div class="micro">If minors are involved</div></span></label>
+            <label class="chk"><input type="checkbox" name="estateDocs" value="Not sure / need review" /> <span><strong>Not sure / need review</strong><div class="micro">We’ll help you clarify</div></span></label>
+          </div>
+
+          <div class="grid" style="margin-top:12px;">
+            <div>
+              <label>Beneficiaries up to date?</label>
+              <select name="beneficiaries"><option value="">Select</option><option value="yes">Yes</option><option value="no">No</option><option value="notSure">Not sure</option></select>
+            </div>
+            <div>
+              <label>When were these last reviewed? (optional)</label>
+              <input name="estateReviewed" placeholder="e.g., 2019 / not sure" />
+            </div>
+          </div>
+
+          <div class="row"><button class="secondary" type="button" data-prev="obbba">Back</button><button type="button" data-next="notes">Next</button></div>
+        </section>
+
+        <!-- NOTES -->
+        <section id="notes">
+          <h2>Planning Brief Inputs (Advisor Notes)</h2>
+          <p class="hint">Client-facing questions first, then internal tags. This becomes your CRM note and your deliverable inputs.</p>
+
+          <div class="grid">
+            <div><label>Work with CPA or Financial Advisor?</label>
+              <select name="otherPros"><option value="">Select</option><option value="both">CPA + Advisor</option><option value="cpa">CPA only</option><option value="advisor">Advisor only</option><option value="no">No</option></select>
+            </div>
+            <div><label>Primary decision-maker?</label>
+              <select name="decisionAuthority"><option value="">Select</option><option value="me">Me</option><option value="spouse">Spouse/partner</option><option value="joint">Joint</option><option value="other">Other</option></select>
+            </div>
+          </div>
+
+          <label>Why now? (verbatim)</label><textarea name="whyNow" placeholder="What prompted you to take a second look now?"></textarea>
+
+          <label>Top 3 priorities (client words)</label>
+          <textarea name="top3" placeholder="1)&#10;2)&#10;3)"></textarea>
+
+          <label>What would make this plan feel successful one year from now? (verbatim)</label>
+          <textarea name="planSuccess1y"></textarea>
+
+          <label>What would prevent you from moving forward? (verbatim)</label>
+          <textarea name="blockers" placeholder="What might cause hesitation or delay?"></textarea>
+
+          <label>Open questions for next meeting</label>
+          <textarea name="openQuestions"></textarea>
+
+          <div class="row">
+            <button class="secondary" type="button" data-prev="estate">Back</button>
+            <button type="submit">Save</button>
+            <button class="secondary" type="button" id="btnCopy">Copy CRM Summary</button>
+          </div>
+          <div class="ok" id="saved"><strong>Saved locally.</strong> CRM Summary is ready to copy.</div>
+
+          <label style="margin-top:12px;">CRM Summary (copy/paste)</label>
+          <textarea id="crm" readonly></textarea>
+          <div class="small">Neutral recap (no advice). Includes key flags so you don’t re-enter later.</div>
+        </section>
+      </form>
+
+      <div class="small" style="margin-top:14px;">
+        This stores data in your browser only (localStorage key: <code>peak_assessment_partA_v1</code>).
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const KEY = 'peak_assessment_partA_v1';
+
+    // Tabs
+    const chips = Array.from(document.querySelectorAll('.chip'));
+    const secs = Array.from(document.querySelectorAll('form section'));
+    function show(id){
+      secs.forEach(s => s.classList.toggle('active', s.id===id));
+      chips.forEach(c => c.classList.toggle('active', c.dataset.target===id));
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+    document.getElementById('nav').addEventListener('click', (e)=>{
+      const b = e.target.closest('button[data-target]');
+      if(b) show(b.dataset.target);
+    });
+    document.addEventListener('click', (e)=>{
+      const n = e.target.closest('button[data-next]');
+      const p = e.target.closest('button[data-prev]');
+      if(n) show(n.dataset.next);
+      if(p) show(p.dataset.prev);
+    });
+
+    // Followups
+    const followMap = [
+      ['rothConv','f_roth'],
+      ['employerStock401k','f_nua'],
+      ['acaMarketplace','f_aca'],
+      ['charity','f_charity']
+    ];
+    function refreshFollowups(){
+      followMap.forEach(([selId, boxId])=>{
+        const sel=document.getElementById(selId);
+        const box=document.getElementById(boxId);
+        if(!sel || !box) return;
+        box.classList.toggle('on', sel.value==='yes');
+      });
+    }
+    followMap.forEach(([selId])=>{
+      const sel=document.getElementById(selId);
+      if(sel) sel.addEventListener('change', refreshFollowups);
+    });
+    refreshFollowups();
+
+    // Serialize form (supports checkbox groups)
+    function getFormData(form){
+      const fd = new FormData(form);
+      const data = {};
+      for(const [k,v] of fd.entries()){
+        if(data[k] !== undefined){
+          if(!Array.isArray(data[k])) data[k] = [data[k]];
+          data[k].push(v);
+        } else {
+          data[k] = v;
+        }
+      }
+      return data;
+    }
+
+    // Restore form (supports checkbox groups)
+    function setFormData(form, data){
+      for(const k in data){
+        if(!Object.prototype.hasOwnProperty.call(data,k)) continue;
+        const val = data[k];
+        const els = form.querySelectorAll(`[name="${k}"]`);
+        if(!els || els.length===0) continue;
+
+        if(Array.isArray(val)){
+          // checkbox group
+          els.forEach(el=>{
+            if(el.type === 'checkbox') el.checked = val.includes(el.value);
+            else el.value = val[0] ?? '';
+          });
+        } else {
+          els.forEach(el=>{
+            if(el.type === 'checkbox'){
+              el.checked = (val === el.value);
+            } else if(el.type === 'radio'){
+              el.checked = (val === el.value);
+            } else {
+              el.value = val;
+            }
+          });
+        }
+      }
+    }
+
+    // CRM summary
+    const safe = (v)=>String(v??'').trim();
+    const add = (arr,label,val)=>{
+      if(Array.isArray(val)){
+        const j = val.map(safe).filter(Boolean).join(', ');
+        if(j) arr.push(label + ': ' + j);
+        return;
+      }
+      const v = safe(val);
+      if(v) arr.push(label + ': ' + v);
+    };
+
+    function buildCRMSummary(d){
+      const lines=[];
+      add(lines,'Name',d.name);
+      add(lines,'Email',d.email);
+      add(lines,'Phone',d.phone);
+      add(lines,'Age',d.age);
+      add(lines,'Marital status',d.maritalStatus);
+      add(lines,'Employed',d.employed);
+      add(lines,'Occupation',d.occupation);
+      add(lines,'Dependents',d.dependents);
+
+      lines.push('');
+      add(lines,'Retirement age target',d.retirementAge);
+      add(lines,'Income goal',d.incomeGoal);
+      add(lines,'Social Security target age',d.ssAge);
+      add(lines,'Pension',d.pension);
+      add(lines,'Retire before 65',d.retireBefore65);
+      add(lines,'Primary concern',d.biggestConcern);
+      add(lines,'Retirement market reaction',d.retireMarketReaction);
+      add(lines,'Retirement priority',d.retirePriority);
+      add(lines,'Income change preference',d.incomeChangePreference);
+      add(lines,'Income planning style',d.incomeStyle);
+
+      lines.push('');
+      add(lines,'Major accounts (checklist)',d.accountsChecklist);
+      add(lines,'Accounts details',d.accountsDetails);
+      add(lines,'Roth conversions',d.rothConv);
+      add(lines,'Roth history',d.rothYears);
+      add(lines,'Roth reason',d.rothReason);
+      add(lines,'Employer stock in 401k (NUA)',d.employerStock401k);
+      add(lines,'NUA notes',d.nuaApprox);
+      add(lines,'Near-term money (0–3 yrs)',d.paycheckMoney);
+      add(lines,'Long-term money (10+ yrs)',d.futureMoney);
+      add(lines,'~15% drawdown response',d.drawdownResponse);
+      add(lines,'Investing experience',d.investingExperience);
+      add(lines,'Long-term view',d.longTermView);
+      add(lines,'Risk priority',d.riskPriority);
+
+      lines.push('');
+      add(lines,'OBBBA flags',d.obbbaFlags);
+      add(lines,'ACA marketplace',d.acaMarketplace);
+      add(lines,'ACA income mgmt',d.acaIncomeMgmt);
+      add(lines,'Charitable giving',d.charity);
+      add(lines,'Charity annual',d.charityAnnual);
+      add(lines,'OBBBA notes',d.obbbaNotes);
+
+      lines.push('');
+      add(lines,'Estate docs (checklist)',d.estateDocs);
+      add(lines,'Estate last reviewed',d.estateReviewed);
+      add(lines,'Beneficiaries current',d.beneficiaries);
+
+      lines.push('');
+      add(lines,'Other professionals',d.otherPros);
+      add(lines,'Decision authority',d.decisionAuthority);
+      add(lines,'Why now',d.whyNow);
+      add(lines,'Top 3 priorities',d.top3);
+      add(lines,'Success in 1 year',d.planSuccess1y);
+      add(lines,'Blockers to moving forward',d.blockers);
+      add(lines,'Open questions',d.openQuestions);
+
+      lines.push('');
+      lines.push('Next step: Request tax return + investment statements; schedule deliverable meeting.');
+      return lines.join(String.fromCharCode(10));
+    }
+
+    function save(){
+      const data = getFormData(document.getElementById('f'));
+      localStorage.setItem(KEY, JSON.stringify({savedAt:new Date().toISOString(), data:data}));
+      document.getElementById('crm').value = buildCRMSummary(data);
+      document.getElementById('saved').style.display='block';
+      return data;
+    }
+
+    document.getElementById('f').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      save();
+      show('notes');
+    });
+
+    async function copyCRM(){
+      const text = document.getElementById('crm').value || '';
+      if(!text.trim()) return;
+      try{
+        await navigator.clipboard.writeText(text);
+        const btn=document.getElementById('btnCopy');
+        if(btn){
+          const old=btn.textContent;
+          btn.textContent='Copied!';
+          setTimeout(()=>btn.textContent=old, 1200);
+        }
+      } catch {
+        const box=document.getElementById('crm');
+        box.focus(); box.select();
+        alert('Copy failed. Select the text and copy manually (Ctrl/Cmd+C).');
+      }
+    }
+    document.getElementById('btnCopy').addEventListener('click', ()=>{ save(); copyCRM(); });
+
+    // Auto-load
+    (function load(){
+      const raw = localStorage.getItem(KEY);
+      if(!raw) return;
+      try{
+        const payload = JSON.parse(raw);
+        const d = payload.data || {};
+        setFormData(document.getElementById('f'), d);
+        refreshFollowups();
+        document.getElementById('crm').value = buildCRMSummary(d);
+      } catch (err){
+        console.warn('Auto-load failed:', err);
+      }
+    })();
+  </script>
+</body>
+</html>
